@@ -59,44 +59,89 @@
   -->
   <div class="inbox">
     <div class="item">
-      <input type="checkbox">
+      <input data-key="1" type="checkbox">
       <p>This is an inbox layout.</p>
     </div>
     <div class="item">
-      <input type="checkbox">
+      <input data-key="2" type="checkbox">
       <p>Check one item</p>
     </div>
     <div class="item">
-      <input type="checkbox">
+      <input data-key="3" type="checkbox">
       <p>Hold down your Shift key</p>
     </div>
     <div class="item">
-      <input type="checkbox">
+      <input data-key="4" type="checkbox">
       <p>Check a lower item</p>
     </div>
     <div class="item">
-      <input type="checkbox">
+      <input data-key="5" type="checkbox">
       <p>Everything in between should also be set to checked</p>
     </div>
     <div class="item">
-      <input type="checkbox">
+      <input data-key="6" type="checkbox">
       <p>Try to do it without any libraries</p>
     </div>
     <div class="item">
-      <input type="checkbox">
+      <input data-key="7" type="checkbox">
       <p>Just regular JavaScript</p>
     </div>
     <div class="item">
-      <input type="checkbox">
+      <input data-key="8" type="checkbox">
       <p>Good Luck!</p>
     </div>
     <div class="item">
-      <input type="checkbox">
+      <input data-key="9" type="checkbox">
       <p>Don't forget to tweet your result!</p>
     </div>
   </div>
 
 <script>
+    let shiftDown = false;
+    let inputs = document.querySelectorAll('input');
+    let lastKeyClicked;
+
+    inputs.forEach((input) => {
+      input.addEventListener('click', inputClicked);
+    })
+
+    // need event listener for shift button on keydown
+    window.addEventListener('keydown', checkForShiftDown);
+    // need event listener for shift button on keyup
+    window.addEventListener('keyup', checkForShiftUp);
+
+    function checkForShiftDown(e) {
+      if(e.keyCode === 16) {
+        shiftDown = true;
+      }
+    }
+
+    function checkForShiftUp(e) {
+      if(e.keyCode === 16) {
+        shiftDown = false;
+      }
+    }
+
+    function inputClicked(e) {
+      console.log(e.target.dataset.key);
+      if(shiftDown) {
+        // find if any inputs keys are between e.target.dataset.key and lastKeyClicked
+        inputs.forEach((input) => {
+          if(
+            (input.dataset.key > e.target.dataset.key && input.dataset.key < lastKeyClicked) 
+            || 
+            (input.dataset.key < e.target.dataset.key && input.dataset.key > lastKeyClicked)) {
+              input.checked = true;
+              
+          }
+        })
+      }
+      lastKeyClicked = e.target.dataset.key;
+      console.log(lastKeyClicked);
+      
+    }
+    
+    
 </script>
 </body>
 </html>
