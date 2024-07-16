@@ -7,6 +7,40 @@
     <link rel="icon" href="https://fav.farm/🔥" />
   </head>
   <body>
-    <script></script>
+    <script>
+      const pressed = [];
+      const secretCode = 'juniper';
+
+      function addKeyPressed(e) {
+        pressed.push(e.key);
+        if(pressed.length === secretCode.length) {
+          console.log('time to compare');
+          let compareString = '';
+          for (const char of pressed) {
+            compareString += char;
+          }
+          console.log(compareString);
+          
+          // compare to secretCode;
+          if(compareString === secretCode) {
+            console.log('YAYYY');
+            
+          }
+          // then empty pressed;
+          pressed.splice(0,pressed.length);
+        }
+      }
+
+      window.addEventListener('keyup', (e) => {
+        pressed.push(e.key);
+        pressed.splice(-secretCode.length - 1,pressed.length - secretCode.length);
+        if(pressed.join('').includes(secretCode)) {
+          console.log('DING, DING');
+          cornify_add();
+        }    
+      })
+
+
+    </script>
   </body>
 </html>
